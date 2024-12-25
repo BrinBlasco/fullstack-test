@@ -1,0 +1,26 @@
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.wrapper input {
+    padding: 3px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.wrapper button {
+    padding: 5px;
+    margin: 20px auto;
+}
+
+.wrapper h1 {
+    margin: 0 auto 20px auto;
+}
+
+.wrapper p {
+    color: rgb(230, 59, 59);
+    margin: 10px auto;
+}
