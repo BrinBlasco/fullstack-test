@@ -10,9 +10,8 @@ const App = () => {
   return (
 	  <Router>
 		  <Routes>
-			  <Route path='/index.html' element={<AuthPage />} />
 			  <Route path='/' element={<AuthPage />} />
-			  <Route path='/dashboard' element={<Dashboard />} />
+			  <Route path='/home' element={<Dashboard />} />
 		  </Routes>
 	  </Router>
   )

@@ -10,7 +10,7 @@ const Dashboard = () => {
             const token = localStorage.getItem('token');
             if(!token){
                 console.log("No token");
-                window.location.href = '/';
+                //window.location.href = '/';
                 return;
             }
             try {

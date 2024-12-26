@@ -19,7 +19,7 @@ const RegisterFrom = () => {
       
         try {
             setMessage("");
-            const res = await axios.post('https://localhost:5000/auth/signup', {username, email, password});
+            const res = await axios.post('http://localhost:5000/auth/signup', {username, email, password});
             const tkn = res.data.token;
             
             localStorage.setItem('token', tkn);

@@ -20,9 +20,9 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
+    const { login, password } = req.body;
     try {
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ username: login });
         if (!user) return res.status(404).send('User not found');
 
         const validPassword = await bcrypt.compare(password, user.password);
