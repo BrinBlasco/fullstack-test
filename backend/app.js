@@ -18,9 +18,9 @@ async function run() {
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
   } catch (err) {
-        console.log("Mongo err: ", err);
-        mongoose.disconnect();
-        process.exit(1);
+    console.log("Mongo err: ", err);
+    mongoose.disconnect();
+    process.exit(1);
   }
 }
 run().catch(console.dir);

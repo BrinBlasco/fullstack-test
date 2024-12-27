@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import UserDataForm from "../components/UserDataForm";
 
 const Dashboard = () => {
     const [data, setData] = useState('');
@@ -31,6 +32,7 @@ const Dashboard = () => {
             <h1>Welcome to the Dashboard</h1>
 
             <div>{data}</div>
+
         </div>
     );
 };
