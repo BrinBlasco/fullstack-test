@@ -4,8 +4,8 @@ const Company = require('./Company');
 const Employee = require('./Employee');
 
 const companyEmplyeeSchema = new mongoose.Schema({
-    employee: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: true },
-    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: true },
+    employeeID: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: true },
+    companyID: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: true },
     
     salary: { type: Number, required: true },
     hireDate: { type: Date, required: true },
@@ -13,6 +13,6 @@ const companyEmplyeeSchema = new mongoose.Schema({
     employmentStatus: { type: String, required: true }
 });
 
-companyEmplyeeSchema.index({ employee: 1, company: 1 }, { unique: true })
+companyEmplyeeSchema.index({ employee: 1, company: 1 }, { unique: true }); // composite key
 const CompanyEmployee = mongoose.model('CompanyEmployee', companyEmplyeeSchema);
 module.exports = CompanyEmployee;

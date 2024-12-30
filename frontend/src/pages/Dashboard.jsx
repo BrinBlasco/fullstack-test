@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import UserDataForm from "../components/UserDataForm";
 
 const Dashboard = () => {
     const [data, setData] = useState('');
