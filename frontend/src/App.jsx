@@ -1,9 +1,12 @@
-import './styles/App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Redirect, Routes } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
+
 import AuthPage from './pages/AuthPage';
 import Dashboard from './pages/Dashboard';
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import AdminPanel from './pages/AdminPanel';
 
+import './styles/App.css';
 
 const App = () => {
   
@@ -11,7 +14,9 @@ const App = () => {
 	  <Router>
 		  <Routes>
 			  <Route path='/' element={<AuthPage />} />
-			  <Route path='/home' element={<Dashboard />} />
+			  <Route path='/login' element={<AuthPage />} />
+			  <Route path='/dashboard' element={<Dashboard />} />
+			  <Route path='/adminpanel' element={<AdminPanel />} />
 		  </Routes>
 	  </Router>
   )
