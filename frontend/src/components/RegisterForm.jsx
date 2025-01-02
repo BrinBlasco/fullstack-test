@@ -1,7 +1,7 @@
 
 import { useState, useRef } from "react";
 import '../styles/LogRegForms.css';
-import axios from "axios";
+import '../../../AxiosConfig';
 
 const RegisterFrom = () => {
 	const [email, setEmail] = useState('');
@@ -26,10 +26,8 @@ const RegisterFrom = () => {
 
 		try {
 			setMessage("");
-			const res = await axios.post('http://localhost:5000/auth/signup', { username, email, password, upid, fName, lName, phone, bdate });
-			const tkn = res.data.token;
+			const res = await axios.post('/auth/signup', { username, email, password, upid, fName, lName, phone, bdate });
 			
-			localStorage.setItem('token', tkn);
 			location.href = '/';
 
 		} catch (error) {

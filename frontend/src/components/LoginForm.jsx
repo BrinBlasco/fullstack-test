@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import '../styles/LogRegForms.css';
-import axios from "axios";
+import axios from "../../../AxiosConfig";
 
 const LoginForm = () => {
     const [login, setLogin] = useState('');
@@ -9,18 +9,19 @@ const LoginForm = () => {
     const [message, setMessage] = useState('');
 
     const handleLogin = async (e) => {
-        e.preventDefault();
-        
-        try {
-            const res = await axios.post('http://localhost:5000/auth/login', {login, password});
-            const tkn = res.data.token;
-            
-            localStorage.setItem('token', tkn);
-            window.location.href = '/home';
-        } catch (error) {
-            console.log(error);
-            setMessage("Error loggin in!");
+      e.preventDefault();
+
+      try {
+        const res = await axios.post('auth/login', { login, password });
+        console.log(res);
+        if (res.status == 200) {
+          console.log('yes here something');
+          location.href = '/dashboard';
         }
+      } catch (error) {
+        console.log(error);
+        setMessage("Error loggin in!");
+      }
     };
 
     return (

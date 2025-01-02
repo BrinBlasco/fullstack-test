@@ -1,26 +1,17 @@
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../../AxiosConfig";
 
 const Dashboard = () => {
     const [data, setData] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = localStorage.getItem('token');
-            if(!token){
-                console.log("No token");
-                window.location.href = '/';
-                return;
-            }
             try {
-                const res = await axios.get("http://localhost:5000/auth/protected", {
-                    headers: { Authorization: `Bearer ${token}`},
-                });
-                setData(res.data);
+                const res = await axios.get("/auth/protected");
+                console.log(res.data);
             } catch (err) {
                 console.log(err);
-                window.location.href = '/';
             }
         };
         fetchData();

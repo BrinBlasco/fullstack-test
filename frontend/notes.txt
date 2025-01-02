@@ -14,3 +14,5 @@ actually make the kitchen and waiter page.
 pogrunti prokljt authentication kr bo treba pocasi
 
 mogoce dodaj nou route za register kr sezmirm pelje na auth page samo da prvo odpre register component
+
+page za dodat iteme u menu iz admin pagea
