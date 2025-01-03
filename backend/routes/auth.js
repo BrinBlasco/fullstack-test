@@ -11,11 +11,10 @@ const router = express.Router();
 
 const authenticateJWT = (req, res, next) => {
     const token = req.cookies.auth_token;
-    console.log(token);
-    if(!token) return res.sendStatus(403);
+    if(!token) return res.status(403).json({ message : 'No token' });
 
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if(err) return res.sendStatus(403);
+        if(err) return res.status(403).json({ message : 'Invalid signature' });
         req.user = user;
         next();
     });
@@ -52,14 +51,14 @@ router.post('/signup', async (req, res) => {
         await session.commitTransaction();
         session.endSession();
 
-        res.status(201).send('User created');
+        res.status(201).json({ message: 'User created' });
 
     } catch (err) {
         await session.abortTransaction();
         session.endSession();
 
         console.error("Transaction failed: ", err);
-        res.status(500).send(`Error creating user: ${err}`);
+        res.status(500).json({ message : `Error creating user: ${err}` });
     }
 });
 
@@ -72,10 +71,10 @@ router.post('/login', async (req, res) => {
                 { email: login }
             ]
         });
-        if (!user) return res.status(404).send('User not found');
+        if (!user) return res.status(404).json({ message: 'User not found' });
 
         const validPassword = await bcrypt.compare(password, user.password);
-        if (!validPassword) return res.status(401).send('Invalid password');
+        if (!validPassword) return res.status(401).json({ message: 'Invalid password' });
 
         const token = jwt.sign({ id: user._id, uname: user.username}, process.env.JWT_SECRET, {expiresIn: '1h' });
 
@@ -97,13 +96,13 @@ router.post('/login', async (req, res) => {
 
 router.get('/logout', (req, res) => {
     res.clearCookie();
-    res.status(200).json({ message: 'Logged out' });
+    return res.status(200).json({ message: 'Logged out' });
 });
 
 router.get('/protected', authenticateJWT, async (req, res) => {
-    console.log(req);
+    console.log(req.cookies);
     const userProfile = await User.findById(req.user.id);
-    console.log(userProfile);
+    console.log("user :", userProfile);
     return res.json( {user: userProfile });
 });
 
