@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import '../styles/LogRegForms.css';
+import '../styles/Forms.css';
 import axios from "../../../AxiosConfig";
 
 const LoginForm = () => {

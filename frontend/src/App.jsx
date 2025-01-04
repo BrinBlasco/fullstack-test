@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import AdminPanel from './pages/AdminPanel';
 
 import './styles/App.css';
+import AddressForm from './components/AddressForm';
 
 const App = () => {
   
@@ -14,6 +15,7 @@ const App = () => {
 		  <Routes>
 			  <Route path='/' element={<AuthPage />} />
 			  <Route path='/login' element={<AuthPage />} />
+			  <Route path='/changeAddress' element={<AddressForm />} />
 			  <Route path='/dashboard' element={<Dashboard />} />
 			  <Route path='/adminpanel' element={<AdminPanel />} />
 		  </Routes>

@@ -1,6 +1,6 @@
 
 import { useState, useRef } from "react";
-import '../styles/LogRegForms.css';
+import '../styles/Forms.css';
 import '../../../AxiosConfig';
 
 const RegisterFrom = () => {

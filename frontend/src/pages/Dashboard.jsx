@@ -17,12 +17,19 @@ const Dashboard = () => {
         fetchData();
     });
 
+    const callApi = async () => {
+        const res = await axios.get('/auth/protected/address');
+        console.log(res);
+    };
+
+
     return (
         <div style={ {width: "100%", placeItems: "center"} }>
             <h1>Welcome to the Dashboard</h1>
 
             <div>{data}</div>
-
+            
+            <button onClick={callApi}>Click Me</button>
         </div>
     );
 };

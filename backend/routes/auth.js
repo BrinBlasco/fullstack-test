@@ -5,20 +5,11 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
 const User = require('../models/User');
-const UserData = require('../models/Employee');
+const Employee = require('../models/Employee');
+const Address = require('../models/Address');
+const authenticateJWT = require('./authenticateJWT');
 
 const router = express.Router();
-
-const authenticateJWT = (req, res, next) => {
-    const token = req.cookies.auth_token;
-    if(!token) return res.status(403).json({ message : 'No token' });
-
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if(err) return res.status(403).json({ message : 'Invalid signature' });
-        req.user = user;
-        next();
-    });
-};
 
 router.post('/signup', async (req, res) => {
     const session = await mongoose.startSession(); 
@@ -37,7 +28,7 @@ router.post('/signup', async (req, res) => {
         });
         const user = await newUser.save({ session });
 
-        const newUserData = new UserData({
+        const newEmployee = new Employee({
             upid: upid,
             firstName: fName,
             lastName: lName,
@@ -46,7 +37,7 @@ router.post('/signup', async (req, res) => {
             dateOfBirth: bdate,
             accountID: user._id
         });
-        await newUserData.save({ session });
+        await newEmployee.save({ session });
 
         await session.commitTransaction();
         session.endSession();
@@ -76,15 +67,15 @@ router.post('/login', async (req, res) => {
         const validPassword = await bcrypt.compare(password, user.password);
         if (!validPassword) return res.status(401).json({ message: 'Invalid password' });
 
-        const token = jwt.sign({ id: user._id, uname: user.username}, process.env.JWT_SECRET, {expiresIn: '1h' });
+        const accessToken = jwt.sign({ id: user._id }, process.env.JWT_ACC_SECRET, {expiresIn: '14h' });
 
-        res.cookie('auth_token', token, {
+        res.cookie('auth_token', accessToken, {
             httpOnly: true,
-            maxAge: 360000,
+            maxAge: 1000 * 60 * 60 * 24 * 7,
             sameSite: 'strict', //secure: process.env.NODE_ENV === 'development'
             secure: false
         });
-        
+
         user.lastLogin = Date.now();
         user.save();
 
@@ -100,10 +91,17 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/protected', authenticateJWT, async (req, res) => {
-    console.log(req.cookies);
     const userProfile = await User.findById(req.user.id);
-    console.log("user :", userProfile);
-    return res.json( {user: userProfile });
+    return res.json(userProfile);
+});
+
+router.get('/protected/address', authenticateJWT, async (req, res) => {
+    const employee = await Employee.findOne({ accountID: req.user.id });
+
+    if(!employee.addressID) return res.json("No address.");
+    
+    const address = await Address.findById(employee._id);
+    return res.json({ address: address });
 });
 
 
